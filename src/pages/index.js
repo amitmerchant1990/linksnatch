@@ -6,6 +6,7 @@ import { AppHeader } from '@/components/AppHeader'
 import { Links } from '@/components/Links'
 import { Placeholder } from '@/components/Placeholder'
 import { isValidHttpUrl, fetchUrlMetadata } from '@/utils/common'
+import { toast, Toaster } from 'react-hot-toast'
 
 export default function Home() {
   const [url, setUrl] = useState('')
@@ -38,16 +39,19 @@ export default function Home() {
 
     if (event.key === 'Enter') {
       if (!isValidHttpUrl(url)) {
-        alert('Please enter a valid URL');
-        return;
+        toast.error('Please enter a valid URL');
+        return
       }
 
-      let links = await fetchUrlMetadata(url)
-      reloadLinks(links)
+      allLinks = await fetchUrlMetadata(url)
+      reloadLinks(allLinks)
     }
   };
 
   function reloadLinks(links) {
+    if (!links) 
+      return
+
     setLinks(links)
     setUrl('')
   }
@@ -67,13 +71,18 @@ export default function Home() {
 
   return (
     <>
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
+
       <AppHeader />
 
       <div class="container mx-auto px-4 flex justify-center mt-10">
         <input
           type="text"
           class="lg:w-1/2 w-full border bg-gray-100 border-slate-300 outline-none focus:outline-none focus:ring lg:flex items-center text-sm leading-6 text-slate-400 rounded-2xl shadow-sm py-4 px-4 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700"
-          placeholder="Paste your link here or search for a link..."
+          placeholder="Paste your link here or search for links..."
           id="url"
           name="url"
           value={url}
@@ -83,7 +92,7 @@ export default function Home() {
         />
       </div>
 
-      {links.length > 0 && (
+      {links?.length > 0 && (
         <Links links={links} deleteLink={deleteLink} />
       )}
 

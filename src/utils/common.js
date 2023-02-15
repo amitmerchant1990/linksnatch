@@ -1,11 +1,13 @@
+import { toast } from 'react-hot-toast'
+
 export function extractDomainName(url = '') {
     if (!url) return;
 
     try {
-        let domain = new URL(url);
-        return domain.hostname;
+        let domain = new URL(url)
+        return domain.hostname
     } catch (e) {
-        alert('bad url')
+        return
     }
 }
 
@@ -15,8 +17,7 @@ export function isValidHttpUrl(string) {
     try {
         url = new URL(string);
     } catch (e) {
-        //alert('can not proccess url')
-        return;
+        return false
     }
 
     return url.protocol === "http:" || url.protocol === "https:";
@@ -31,8 +32,8 @@ export const fetchUrlMetadata = async (url) => {
         )
 
         if (!res.ok) {
-            alert('bad url')
-            return;
+            toast.error('Oops! Bad URL.')
+            return false
         }
     } catch (err) {
         console.log(err);
@@ -65,3 +66,8 @@ export const fetchUrlMetadata = async (url) => {
 
     return links
 };
+
+export function copyLink(url) {
+    navigator.clipboard.writeText(url)
+    toast.success('Link copied to clipboard!')
+}
