@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.swal2-icon {
+    display: none !important;
+}
+
+.swal2-popup {
+    padding: 0 0 2em !important;
+}
+
+.swal2-html-container {
+    margin: 2em 1.6em 0.3em !important;
+    font-weight: bold !important;
+}
+
+.swal2-popup {
+    border-radius: 20px !important;
+}
+
+.swal2-confirm,
+.swal2-cancel {
+    border-radius: 10px !important;
+}

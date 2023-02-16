@@ -8,8 +8,11 @@ import { Placeholder } from '@/components/Placeholder'
 import { isValidHttpUrl, fetchUrlMetadata, formatUrl } from '@/utils/common'
 import { toast, Toaster } from 'react-hot-toast'
 import { NextSeo } from 'next-seo'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export default function Home() {
+  const MySwal = withReactContent(Swal)
   const [url, setUrl] = useState('')
   const [links, setLinks] = useState([])
   const textInput = useRef(null)
@@ -80,10 +83,30 @@ export default function Home() {
   }
 
   function deleteLink(id) {
-    const links = JSON.parse(localStorage.getItem('links'));
-    const filteredLinks = links.filter(link => link.id !== id);
-    localStorage.setItem('links', JSON.stringify(filteredLinks));
-    setLinks(filteredLinks)
+    MySwal.fire({
+      text: 'Are you sure you want to delete this link?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+			cancelButtonColor: '#8e77e5',
+      confirmButtonText: 'Yes, delete it!',
+      showClass: {
+        backdrop: 'swal2-noanimation', // disable backdrop animation
+        popup: '',                     // disable popup animation
+        icon: ''                       // disable icon animation
+      },
+      hideClass: {
+        popup: '',                     // disable popup fade-out animation
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const links = JSON.parse(localStorage.getItem('links'));
+        const filteredLinks = links.filter(link => link.id !== id);
+        localStorage.setItem('links', JSON.stringify(filteredLinks));
+        setLinks(filteredLinks)
+        toast.success('Link deleted!');
+      }
+    })
   }
 
   function searchLinks() {
