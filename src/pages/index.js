@@ -41,6 +41,7 @@ export default function Home() {
     if (url === '' || isValidHttpUrl(formattedUrl?.href)) {
       allLinks = localStorage.getItem('links') ? JSON.parse(localStorage.getItem('links')) : []
       setLinks(allLinks)
+      textInput.current.focus()
     }
 
     if (isValidHttpUrl(formattedUrl?.href)) {
@@ -71,11 +72,11 @@ export default function Home() {
     setShowSpinner(false)
     reloadLinks(allLinks)
   }
-
+  
   function reloadLinks(links) {
     if (!links)
       return
-
+    
     toast.success('Link saved!')
     setLinks(links)
     setUrl('')
@@ -132,7 +133,7 @@ export default function Home() {
         <div class="relative lg:w-1/2 w-full">
           <input
             type="text"
-            className={`w-full border bg-gray-100 border-slate-300 outline-none focus:outline-none focus:ring lg:flex items-center text-sm leading-6 text-slate-400 rounded-2xl shadow-sm py-4 px-4 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 ${hasValidUrl ? "focus:ring-green-300 ring-green-300" : ""}`}
+            className={`w-full border bg-gray-100 border-slate-300 dark:border-slate-600 outline-none focus:outline-none focus:ring lg:flex items-center text-sm sm:text-lg md:text-lg leading-6 text-slate-600 dark:text-slate-300 rounded-2xl shadow-sm py-4 px-4 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 ${hasValidUrl ? "focus:ring-green-300 ring-green-300" : ""}`}
             placeholder="Paste your link here or search bookmarks..."
             id="url"
             name="url"
@@ -143,14 +144,14 @@ export default function Home() {
             disabled={showSpinner}
           />
           
-          <button type="button" className={`absolute right-3 top-4 ${hasValidUrl && !showSpinner ? "show" : "hidden"}`} onClick={() => saveLink()}>
+          <button type="button" className={`absolute right-3 top-4 sm:top-5 md:top-5 ${hasValidUrl && !showSpinner ? "show" : "hidden"}`} onClick={() => saveLink()}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-500 hover:stroke-gray-700">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </button>
 
           {showSpinner && (
-            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-violet-400 rounded-full absolute right-3 top-4" role="status" aria-label="loading">
+            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-violet-400 rounded-full absolute right-3 top-4 sm:top-5 md:top-5" role="status" aria-label="loading">
               <span class="sr-only">Loading...</span>
             </div>
           )}

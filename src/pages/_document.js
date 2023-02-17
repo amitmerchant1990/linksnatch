@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <title>LinkSnatch — The dead simple bookmarks</title>
       </Head>
-      <body>
+      <body class="dark:bg-slate-900">
         <Main />
         <NextScript />
       </body>
