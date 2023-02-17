@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect } from "react"
 
 export function AppHeader() {
     if (typeof window !== 'undefined') {
@@ -43,6 +42,8 @@ export function AppHeader() {
                 if (dispatchEvent) {
                     window.dispatchEvent(new CustomEvent('on-hs-appearance-change', { detail: theme }))
                 }
+
+                $resetStylesEl.remove()
             },
             getAppearance() {
                 let theme = this.getOriginalAppearance()
