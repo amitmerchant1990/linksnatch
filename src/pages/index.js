@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import { useState, useEffect, useRef } from 'react'
 import { AppHeader } from '@/components/AppHeader'
 import { Links } from '@/components/Links'
@@ -118,8 +117,8 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="LinkSnatch — The dead simple bookmarks"
-        description="LinkSnatch — The dead simple bookmarks"
+        title="LinkSnatch — Dead simple bookmarks"
+        description="LinkSnatch — Dead simple bookmarks"
       />
 
       <Toaster
@@ -143,14 +142,18 @@ export default function Home() {
             onKeyDown={handleKeyDown}
             disabled={showSpinner}
           />
+          
           <button type="button" className={`absolute right-3 top-4 ${hasValidUrl && !showSpinner ? "show" : "hidden"}`} onClick={() => saveLink()}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-500 hover:stroke-gray-700">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-500 hover:stroke-gray-700">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </button>
-          {showSpinner && (<div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-violet-400 rounded-full absolute right-3 top-4" role="status" aria-label="loading">
-            <span class="sr-only">Loading...</span>
-          </div>)}
+
+          {showSpinner && (
+            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-violet-400 rounded-full absolute right-3 top-4" role="status" aria-label="loading">
+              <span class="sr-only">Loading...</span>
+            </div>
+          )}
         </div>
       </div>
 
