@@ -1,6 +1,9 @@
 import { extractDomainName, copyLink } from '@/utils/common'
 
-export function LinkContainer({ link, deleteLink }) {
+export function LinkContainer({ 
+    link,
+    deleteLink
+}) {
     return (
         <div class="p-9 bg-purple-100 dark:bg-purple-900 rounded-2xl relative shadow-lg dark:shadow-slate-900" key={link.id}>
             <div class="flex gap-2 flex-row items-center mb-2">
@@ -9,10 +12,10 @@ export function LinkContainer({ link, deleteLink }) {
             </div>
 
             <p class="group font-bold flex flex-wrap">
-                <a href={link.url} target="_blank" class="text-gray-700 dark:text-gray-100 flex gap-2 flex-row items-center group-hover:text-blue-600 dark:group-hover:text-blue-300">
+                <a href={link.url} target="_blank" class="text-gray-700 dark:text-gray-100 flex gap-2 flex-row items-center group-hover:text-purple-700 dark:group-hover:text-purple-200">
                     {link.title ?? extractDomainName(link.url ?? '')}
                 </a>
-                <svg class="w-6 h-6 flex-none opacity-0 group-hover:opacity-100 dark:group-hover:stroke-green-100" viewBox="0 0 24 24" fill="none"><path d="M9.75 15.25L15.25 9.75M15.25 9.75H10.85M15.25 9.75V14.15" stroke="#0EA5E9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                <svg class="w-6 h-6 flex-none opacity-0 group-hover:opacity-100 dark:group-hover:stroke-purple-200" viewBox="0 0 24 24" fill="none"><path d="M9.75 15.25L15.25 9.75M15.25 9.75H10.85M15.25 9.75V14.15" stroke="#7e22d8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" class="dark:group-hover:stroke-purple-200"></path></svg>
             </p>
 
             <a class="absolute top-3 right-8" onClick={() => copyLink(link.url)} title="Copy link to clipboard">

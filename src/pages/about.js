@@ -6,7 +6,6 @@ export default function About() {
         <>
             <NextSeo
                 title="About — LinkSnatch — Dead simple bookmarks"
-                description="About — LinkSnatch — Dead simple bookmarks"
             />
 
             <AppHeader />
@@ -29,14 +28,14 @@ export default function About() {
                     </p>
 
                     <ul class="list-disc mt-4 ml-10 text-lg text-slate-700 dark:text-slate-400">
+                        <li>No signup needed.</li>
                         <li>A beautiful interface with minimal distractions.</li>
-                        <li>Extracts URL metadata using <a href="https://jsonlink.io/" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-blue-300 font-bold hover:text-blue-600">jsonlink.io</a> and saves it to the browser's local storage.</li>
+                        <li>Extracts URL metadata using <a href="https://jsonlink.io/" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">jsonlink.io</a> and saves it to the browser's local storage.</li>
                         <li>Save and search links all from a single place.</li>
                         <li>Dark mode.</li>
                         <li>It doesn't track you.</li>
-                        <li>No signup needed.</li>
                         <li>It doesn't require you to install a browser extension.</li>
-                        <li>It's <a href="https://github.com/amitmerchant1990/linksnatch" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-blue-300 font-bold hover:text-blue-600">open source</a>.</li>
+                        <li>It's <a href="https://github.com/amitmerchant1990/linksnatch" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">open source</a>.</li>
                     </ul>
 
                     <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">
@@ -45,7 +44,7 @@ export default function About() {
                     </p>
 
                     <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">
-                        Crafted with ❤️ by <a href="https://www.amitmerchant.com/" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-blue-300 font-bold hover:text-blue-600">Amit Merchant</a>
+                        Crafted with ❤️ by <a href="https://www.amitmerchant.com/" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">Amit Merchant</a>
                     </p>
                 </div>
             </div>

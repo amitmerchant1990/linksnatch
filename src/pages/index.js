@@ -1,5 +1,3 @@
-import Head from 'next/head'
-import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { AppHeader } from '@/components/AppHeader'
 import { Links } from '@/components/Links'
@@ -11,7 +9,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 export default function Home() {
-  const MySwal = withReactContent(Swal)
+  const Dialog = withReactContent(Swal)
   const [url, setUrl] = useState('')
   const [links, setLinks] = useState([])
   const textInput = useRef(null)
@@ -28,7 +26,7 @@ export default function Home() {
 
   useEffect(() => {
     setHasValidUrl(false)
-    let formattedUrl;
+    let formattedUrl
 
     if (url !== '') {
       formattedUrl = formatUrl(url);
@@ -83,7 +81,7 @@ export default function Home() {
   }
 
   function deleteLink(id) {
-    MySwal.fire({
+    Dialog.fire({
       text: 'Are you sure you want to delete this link?',
       icon: 'warning',
       showCancelButton: true,
@@ -100,11 +98,11 @@ export default function Home() {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        const links = JSON.parse(localStorage.getItem('links'));
-        const filteredLinks = links.filter(link => link.id !== id);
-        localStorage.setItem('links', JSON.stringify(filteredLinks));
+        const links = JSON.parse(localStorage.getItem('links'))
+        const filteredLinks = links.filter(link => link.id !== id)
+        localStorage.setItem('links', JSON.stringify(filteredLinks))
         setLinks(filteredLinks)
-        toast.success('Link deleted!');
+        toast.success('Link deleted!')
       }
     })
   }
@@ -119,7 +117,6 @@ export default function Home() {
     <>
       <NextSeo
         title="LinkSnatch — Dead simple bookmarks"
-        description="LinkSnatch — Dead simple bookmarks"
       />
 
       <Toaster
