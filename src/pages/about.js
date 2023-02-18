@@ -11,7 +11,7 @@ export default function About() {
             <AppHeader />
 
             <div class="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full mb-10">
-                <div class="shadow-sm mt-6 relative max-w-7xl w-full mx-2 py-3 px-4 md:py-0 md:px-6 lg:px-8 xl:mx-auto">
+                <div class="mt-6 relative max-w-7xl w-full mx-2 py-3 px-4 md:py-0 md:px-6 lg:px-8 xl:mx-auto">
                     <h6 class="text-2xl font-bold leading-normal mt-0 mb-2 text-gray-600 dark:text-gray-300">About</h6>
 
                     <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">

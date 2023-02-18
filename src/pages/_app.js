@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
           url: 'https://linksnatch.pages.dev',
           siteName: 'LinkSnatch — Dead simple bookmarks',
           images: [
-            { url: '/linksnatch-cover.png' },
+            { url: 'https://linksnatch.pages.dev/linksnatch-cover.png' },
           ],
         }}
         twitter={{
@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
           creator: '@amit_merchant',
         }}
       />
-      
+
       <Component {...pageProps} />
     </>
   )

@@ -1,5 +1,5 @@
 
-<a href="https://dub.sh">
+<a href="https://linksnatch.pages.dev">
   <div align="center">
     <img alt="LinkSnatch" src="public/icon.svg" width="80">
   </div>
@@ -36,7 +36,7 @@ I started building it to solve my own itch but later realized that someone might
 - [Next.js](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Preline](https://preline.co/index.html)
-- [jsonlink.io](jsonlink.io)
+- [jsonlink.io](https://jsonlink.io)
 - [React Hot Toast](https://react-hot-toast.com/)
 
 ## Development
@@ -58,5 +58,24 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see LinkSnatch in action.
+
+## Support
+
+<a href="https://paypal.me/AmitMerchant" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+<p>Or</p> 
+
+[Become a GitHub Sponsor](https://github.com/sponsors/amitmerchant1990)
+
+## License
+
+MIT
+
+---
+
+> [amitmerchant.com](https://www.amitmerchant.com) &nbsp;&middot;&nbsp;
+> GitHub [@amitmerchant1990](https://github.com/amitmerchant1990) &nbsp;&middot;&nbsp;
+> Twitter [@amit_merchant](https://twitter.com/amit_merchant)
+
 
 
