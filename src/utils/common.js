@@ -1,3 +1,4 @@
+import { publicRuntimeConfig } from 'next.config'
 import { toast } from 'react-hot-toast'
 
 export function extractDomainName(url = '') {
@@ -28,7 +29,7 @@ export const fetchUrlMetadata = async (url) => {
 
     try {
         res = await fetch(
-            `https://jsonlink.io/api/extract?url=` + url
+            publicRuntimeConfig.jsonlink_api_url + `/extract?url=${url}`
         )
 
         if (!res.ok) {
@@ -41,12 +42,9 @@ export const fetchUrlMetadata = async (url) => {
     }
 
     const data = await res.json();
-    console.log(data);
 
-    // create an array
     const linksArray = localStorage.getItem('links') ? JSON.parse(localStorage.getItem('links')) : []
 
-    // create a javascript object
     const linkMetaData = {
         'id': Math.random().toString(36).substr(2, 8),
         'title': data.title,
@@ -54,15 +52,11 @@ export const fetchUrlMetadata = async (url) => {
         'timestamp': Math.floor(Date.now() / 1000),
     }
 
-    // add object to array
     linksArray.push(linkMetaData)
 
-    // save array to local storage
     localStorage.setItem('links', JSON.stringify(linksArray))
 
     const links = JSON.parse(localStorage.getItem('links'))
-
-    console.log(links)
 
     return links
 };

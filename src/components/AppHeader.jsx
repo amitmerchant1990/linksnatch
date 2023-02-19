@@ -1,3 +1,4 @@
+import { publicRuntimeConfig } from "next.config"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -101,7 +102,7 @@ export function AppHeader() {
                                     width={25}
                                     height={25}
                                 />
-                                <span>LinkSnatch</span>
+                                <span>{publicRuntimeConfig.app_name}</span>
                             </Link>
                             <div class="hs-dropdown" data-hs-dropdown-placement="bottom-right" data-hs-dropdown-offset="30">
                                 <a class="hs-dropdown-toggle hs-dark-mode group flex items-center text-gray-600 hover:text-blue-600 font-medium dark:text-gray-400 dark:hover:text-gray-500" href="javascript:;">

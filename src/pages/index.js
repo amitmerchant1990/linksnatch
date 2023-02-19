@@ -7,6 +7,7 @@ import { toast, Toaster } from 'react-hot-toast'
 import { NextSeo } from 'next-seo'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { publicRuntimeConfig } from 'next.config'
 
 export default function Home() {
   const Dialog = withReactContent(Swal)
@@ -116,7 +117,7 @@ export default function Home() {
   return (
     <>
       <NextSeo
-        title="LinkSnatch — Dead simple bookmarks"
+        title={publicRuntimeConfig.app_name + ' — ' + publicRuntimeConfig.app_short_description}
       />
 
       <Toaster

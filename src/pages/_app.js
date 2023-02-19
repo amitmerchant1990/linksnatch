@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import { useEffect } from 'react'
 import { NextSeo, DefaultSeo } from 'next-seo'
+import { publicRuntimeConfig } from 'next.config'
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {
@@ -10,25 +11,25 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <NextSeo
-        description="An effortlessly simple bookmarks app that lets you save the links on your device on the go."
-        themeColor="#CABCFD"
+        description={publicRuntimeConfig.description}
+        themeColor={publicRuntimeConfig.app_theme_color}
       />
 
       <DefaultSeo
         openGraph={{
           type: 'application',
-          locale: 'en_US',
-          url: 'https://linksnatch.pages.dev',
-          siteName: 'LinkSnatch — Dead simple bookmarks',
+          locale: publicRuntimeConfig.app_locale,
+          url: publicRuntimeConfig.app_url,
+          siteName: publicRuntimeConfig.app_name + ' — ' + publicRuntimeConfig.app_short_description,
           images: [
-            { url: 'https://linksnatch.pages.dev/linksnatch-cover.png' },
+            { url: publicRuntimeConfig.app_url + '/linksnatch-cover.png' },
           ],
         }}
         twitter={{
-          handle: '@amit_merchant',
-          site: '@amit_merchant',
+          handle: publicRuntimeConfig.app_creator,
+          site: publicRuntimeConfig.app_creator,
+          creator: publicRuntimeConfig.app_creator,
           cardType: 'summary_large_image',
-          creator: '@amit_merchant',
         }}
       />
 

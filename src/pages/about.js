@@ -1,11 +1,12 @@
 import { AppHeader } from "@/components/AppHeader"
 import { NextSeo } from "next-seo"
+import { publicRuntimeConfig } from "next.config"
 
 export default function About() {
     return (
         <>
             <NextSeo
-                title="About — LinkSnatch — Dead simple bookmarks"
+                title={"About — " + publicRuntimeConfig.app_name + ' — ' + publicRuntimeConfig.app_short_description}
             />
 
             <AppHeader />
