@@ -20,7 +20,7 @@ export default function About() {
                     </p>
 
                     <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">
-                        I built <span class="px-2 py-1 dark:text-slate-700 bg-rotate-45 text-md font-bold border rounded-md bg-gradient-to-r from-green-200 to-green-200">LinkSnatch</span> because I wanted something really simple to save links that I wanted to read later. I didn't want to have to sign up for an account, I didn't want to have to install a browser extension, and I (definitely) didn't want to have to use a bookmarking service that was going to track me. 
+                        I built <span class="px-2 py-1 dark:text-slate-700 bg-rotate-45 text-md font-bold border-none rounded-md bg-gradient-to-r from-green-200 to-green-200">LinkSnatch</span> because I wanted something really simple to save links that I wanted to read later. I didn't want to have to sign up for an account, I didn't want to have to install a browser extension, and I (definitely) didn't want to have to use a bookmarking service that was going to track me. 
                         I wanted something pretty straight-forward that just works. And here I am!
                     </p>
 
