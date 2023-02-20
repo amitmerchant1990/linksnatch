@@ -20,8 +20,8 @@ export default function About() {
                     </p>
 
                     <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">
-                        I built <b>LinkSnatch</b> because I wanted something really simple to save links that I wanted to read later. I didn't want to have to sign up for an account, I didn't want to have to install a browser extension, and I didn't want to have to use a bookmarking service that was going to track me. 
-                        I wanted something pretty simple that just works. And here I am!
+                        I built <span class="px-2 py-1 dark:text-slate-700 bg-rotate-45 text-md font-bold border rounded-md bg-gradient-to-r from-green-200 to-green-200">LinkSnatch</span> because I wanted something really simple to save links that I wanted to read later. I didn't want to have to sign up for an account, I didn't want to have to install a browser extension, and I (definitely) didn't want to have to use a bookmarking service that was going to track me. 
+                        I wanted something pretty straight-forward that just works. And here I am!
                     </p>
 
                     <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">
@@ -35,7 +35,6 @@ export default function About() {
                         <li>Save and search links all from a single place.</li>
                         <li>Dark mode.</li>
                         <li>It doesn't track you.</li>
-                        <li>It doesn't require you to install a browser extension.</li>
                         <li>It's <a href="https://github.com/amitmerchant1990/linksnatch" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">open source</a>.</li>
                     </ul>
 
