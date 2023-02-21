@@ -59,6 +59,10 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see LinkSnatch in action.
 
+## Community
+
+[linksnatch-docker](https://github.com/obiequack/linksnatch-docker/) - A docker setup repository for LinkSnatch
+
 ## Support
 
 <a href="https://paypal.me/AmitMerchant" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
