@@ -2,8 +2,8 @@
 <a href="https://linksnatch.pages.dev">
   <div align="center">
     <img alt="LinkSnatch" src="public/icon.svg" width="80">
+    <h1 align="center">LinkSnatch</h1>
   </div>
-  <h1 align="center">LinkSnatch</h1>
 </a>
 
 <p align="center">
