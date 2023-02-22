@@ -66,6 +66,11 @@ export default function Home() {
       return
     }
 
+    if (checkLinkExists(formattedUrl)) {
+      toast.error('Bam! You already have this link saved');
+      return
+    }
+
     setShowSpinner(true)
     allLinks = await fetchUrlMetadata(formattedUrl)
     setShowSpinner(false)
@@ -112,6 +117,12 @@ export default function Home() {
     const links = JSON.parse(localStorage.getItem('links'))
     const filteredLinks = links?.filter(link => link.title?.toLowerCase().includes(url.toLowerCase())) ?? []
     setLinks(filteredLinks)
+  }
+
+  function checkLinkExists(url) {
+    const links = JSON.parse(localStorage.getItem('links'))
+    const filteredLinks = links?.filter(link => link.url === url.href) ?? []
+    return filteredLinks.length > 0
   }
 
   return (
