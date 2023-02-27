@@ -61,7 +61,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see Lin
 
 ## Community
 
-[linksnatch-docker](https://github.com/obiequack/linksnatch-docker/) - A docker setup repository for LinkSnatch
+- [docker-linksnatch](https://github.com/varunsridharan/docker-linksnatch) - A dockerized version of LinkSnatch directly installable from [Docker Hub](https://hub.docker.com/) and [GitHub Container Registry](https://github.com/features/packages) by [@varunsridharan](https://github.com/varunsridharan/docker-linksnatch).
+- [linksnatch-docker](https://github.com/obiequack/linksnatch-docker/) - A docker setup repository for LinkSnatch by [@obiequack](https://github.com/obiequack).
 
 ## Support
 
