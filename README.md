@@ -21,7 +21,7 @@ I built **LinkSnatch** because I wanted something really simple to save links th
 The app is fairly opinionated and comes with a set of bare minimum features I would need:
 
 - A beautiful interface with minimal distractions.
-- Extracts URL metadata using [jsonlink.io](jsonlink.io) and saves it to the browser's local storage.
+- Extracts URL metadata using [jsonlink.io](https://jsonlink.io) and saves it to the browser's local storage.
 - Save and search links all from a single place.
 - Dark mode.
 - It doesn't track you.
