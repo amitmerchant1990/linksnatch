@@ -41,13 +41,19 @@ I started building it to solve my own itch but later realized that someone might
 
 ## Development
 
-First, install the dependencies.
+First, clone the repository.
+
+```bash  
+git clone git@github.com:amitmerchant1990/linksnatch.git
+```
+
+Then install the dependencies.
 
 ```bash
 npm install
 ```
 
-Then run the development server.
+Finally, run the development server.
 
 ```bash
 npm run dev
