@@ -7,7 +7,7 @@ export function extractDomainName(url = '') {
     try {
         let domain = new URL(url)
         return domain.hostname
-    } catch (e) {
+    } catch (error) {
         return
     }
 }
@@ -25,23 +25,23 @@ export function isValidHttpUrl(string) {
 }
 
 export const fetchUrlMetadata = async (url) => {
-    let res;
+    let response;
 
     try {
-        res = await fetch(
+        response = await fetch(
             publicRuntimeConfig.jsonlink_api_url + `/extract?url=${url}`
         )
 
-        if (!res.ok) {
+        if (!response.ok) {
             toast.error('Oops! Bad URL.')
             return false
         }
-    } catch (err) {
-        console.log(err);
+    } catch (error) {
+        console.log(error);
         return;
     }
 
-    const data = await res.json();
+    const data = await response.json();
 
     const linksArray = localStorage.getItem('links') ? JSON.parse(localStorage.getItem('links')) : []
 
