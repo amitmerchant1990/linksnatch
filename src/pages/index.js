@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { AppHeader } from '@/components/AppHeader'
 import { Links } from '@/components/Links'
 import { Placeholder } from '@/components/Placeholder'
-import { isValidHttpUrl, fetchUrlMetadata, formatUrl } from '@/utils/common'
+import { isValidHttpUrl, fetchUrlMetadata, formatUrl, saveTextAsFile } from '@/utils/common'
 import { toast, Toaster } from 'react-hot-toast'
 import { NextSeo } from 'next-seo'
 import Swal from 'sweetalert2'
@@ -11,9 +11,10 @@ import { publicRuntimeConfig } from 'next.config'
 
 export default function Home() {
   const Dialog = withReactContent(Swal)
+  const textInput = useRef(null)
+  const importFile = useRef(null)
   const [url, setUrl] = useState('')
   const [links, setLinks] = useState([])
-  const textInput = useRef(null)
   const [hasValidUrl, setHasValidUrl] = useState(false)
   const [showSpinner, setShowSpinner] = useState(false);
 
@@ -125,6 +126,88 @@ export default function Home() {
     return filteredLinks.length > 0
   }
 
+  function exportBookmarks() {
+    const links = JSON.stringify(JSON.parse(localStorage.getItem('links')))
+
+    if (links === "null" || links === "[]") {
+      toast.error('No bookmarks to be exported!')
+      return
+    }
+
+    saveTextAsFile(
+      links, 
+      'linksnatch-bookmarks-' + Math.floor(Date.now() / 1000) + '.json'
+    )
+  }
+
+  function importBookmarks() {
+    importFile.current.click()
+  }
+
+  function handleImportFile(event) {
+    const fileObj = event.target.files && event.target.files[0]
+
+    if (!fileObj) {
+      return
+    }
+
+    if (fileObj.type !== 'application/json') {
+      toast.error('Not a valid file.')
+      event.target.value = null
+      return
+    }
+
+    const fileReader = new FileReader();
+    fileReader.readAsText(event.target.files[0])
+    fileReader.onload = (e) => {
+      const contents = e.target.result
+      let importedLinks = JSON.parse(contents)
+
+      if (localStorage.getItem('links')) {
+        const existingLinks = JSON.parse(localStorage.getItem('links'))
+
+        if (existingLinks.length > 0) {
+          Dialog.fire({
+            text: 'Do you want to merge the imported links with your existing links?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#8e77e5',
+            confirmButtonText: 'Yes, merge it!',
+            showClass: {
+              backdrop: 'swal2-noanimation', // disable backdrop animation
+              popup: '',                     // disable popup animation
+              icon: ''                       // disable icon animation
+            },
+            hideClass: {
+              popup: '',                     // disable popup fade-out animation
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              importedLinks.forEach(link => {
+                if (!checkLinkExists(link.url)) {
+                  existingLinks.push(link)
+                }
+              })
+      
+              importedLinks = existingLinks.reverse()
+            }
+            
+            localStorage.setItem('links', JSON.stringify(importedLinks))
+            setLinks(importedLinks)
+            toast.success('Bookmarks imported!')
+          })
+        }
+      } else {
+        localStorage.setItem('links', JSON.stringify(importedLinks))
+        setLinks(importedLinks)
+        toast.success('Bookmarks imported!')
+      }
+    };
+
+    event.target.value = null;
+  }
+
   return (
     <>
       <NextSeo
@@ -152,6 +235,27 @@ export default function Home() {
             onKeyDown={handleKeyDown}
             disabled={showSpinner}
           />
+
+          <div class="flex justify-center gap-5 mt-5">
+            <a href="javascript:void(0);" onClick={() => exportBookmarks()} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 text-white hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
+              </svg>
+              Export bookmarks
+            </a>
+            <input
+              style={{display: 'none'}}
+              ref={importFile}
+              type="file"
+              onChange={handleImportFile}
+            />
+            <a href="javascript:void(0);" onClick={importBookmarks} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 text-white hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+              </svg>
+              Import bookmarks
+            </a>
+          </div>
           
           <button type="button" className={`absolute right-3 top-4 sm:top-5 md:top-5 ${hasValidUrl && !showSpinner ? "show" : "hidden"}`} onClick={() => saveLink()}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-500 hover:stroke-gray-700">
