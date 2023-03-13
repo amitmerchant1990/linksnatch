@@ -174,6 +174,7 @@ export default function Home() {
             confirmButtonColor: '#d33',
             cancelButtonColor: '#8e77e5',
             confirmButtonText: 'Yes, merge it!',
+            cancelButtonText: 'No',
             showClass: {
               backdrop: 'swal2-noanimation', // disable backdrop animation
               popup: '',                     // disable popup animation
