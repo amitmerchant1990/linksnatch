@@ -237,7 +237,7 @@ export default function Home() {
           />
 
           <div class="flex justify-center gap-5 mt-5">
-            <a href="javascript:void(0);" onClick={() => exportBookmarks()} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 text-white hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
+            <a href="javascript:void(0);" onClick={() => exportBookmarks()} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 dark:bg-purple-900 text-white hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
               </svg>
@@ -249,7 +249,7 @@ export default function Home() {
               type="file"
               onChange={handleImportFile}
             />
-            <a href="javascript:void(0);" onClick={importBookmarks} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 text-white hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
+            <a href="javascript:void(0);" onClick={importBookmarks} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 dark:bg-purple-900 text-white hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
               </svg>
