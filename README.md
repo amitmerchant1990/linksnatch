@@ -16,7 +16,7 @@
 
 This is a dead simple bookmarks app that lets you save the links on your device on the go.
 
-I built **LinkSnatch** because I wanted something really simple to save links that I wanted to read later. I didn't want to have to sign up for an account, I didn't want to have to install a browser extension, and I didn't want to have to use a bookmarking service that was going to track me. I wanted something pretty simple that just works. And here I am!
+I built [LinkSnatch](https://linksnatch.pages.dev) because I wanted something really simple to save links that I wanted to read later. I didn't want to have to sign up for an account, I didn't want to have to install a browser extension, and I didn't want to have to use a bookmarking service that was going to track me. I wanted something pretty simple that just works. And here I am!
 
 The app is fairly opinionated and comes with a set of bare minimum features I would need:
 
