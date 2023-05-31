@@ -31,6 +31,8 @@ The app is fairly opinionated and comes with a set of bare minimum features I wo
   
 I started building it to solve my own itch but later realized that someone might be in need of something like this. And so, I decided to set it free out in the wild!
 
+> Read the story: [Building LinkSnatch](https://www.amitmerchant.com/building-a-bookmarks-app-with-nextjs-and-tailwind-css/)
+
 ## Tech Stack
 
 - [Next.js](https://nextjs.org/)
