@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "@next/font": "13.1.6",
-    "next": "13.1.6",
+    "eslint-config-next": "^13.5.4",
+    "next": "^13.5.4",
     "next-seo": "^5.15.0",
     "preline": "^1.7.0",
     "prop-types": "^15.8.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "sweetalert2": "^11.7.1",
     "sweetalert2-react-content": "^5.0.7"
