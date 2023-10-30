@@ -29,9 +29,11 @@ export const fetchUrlMetadata = async (url) => {
 
     let data;
 
+    const jsonlink_api_key = process.env.NEXT_PUBLIC_JSONLINK_API_KEY
+
     try {
         response = await fetch(
-            publicRuntimeConfig.jsonlink_api_url + `/extract?url=${url}`
+            publicRuntimeConfig.jsonlink_api_url + `/extract?url=${url}&api_key=${jsonlink_api_key}`
         )
 
         if (!response.ok) {
