@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.1",
     "@next/font": "13.1.6",
     "eslint-config-next": "^13.5.4",
     "next": "^13.5.4",

@@ -40,6 +40,7 @@ I started building it to solve my own itch but later realized that someone might
 - [Preline](https://preline.co/index.html)
 - [jsonlink.io](https://jsonlink.io)
 - [React Hot Toast](https://react-hot-toast.com/)
+- [AutoAnimate](https://auto-animate.formkit.com/)
 
 ## Development
 
