@@ -46,6 +46,19 @@ export default function About() {
                     <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">
                         Crafted with ❤️ by <a href="https://www.amitmerchant.com/" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">Amit Merchant</a>
                     </p>
+
+                    <hr class="mt-4"/>
+
+                    <p class="mt-4 text-lg text-slate-700 dark:text-slate-400">
+                        Explore more projects: 
+                    </p>
+
+                    <ul class="list-disc mt-4 ml-10 text-lg text-slate-700 dark:text-slate-400">
+                        <li><a href="https://notepad.js.org/" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">Notepad — Offline Capable</a></li>
+                        <li><a href="https://markdownify.js.org/" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">Markdownify</a></li>
+                        <li><a href="https://github.com/amitmerchant1990/consolepad" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">ConsolePad</a></li>
+                        <li><a href="https://github.com/amitmerchant1990/reverie" target="_blank" class="text-gray-700 dark:text-gray-300 dark:hover:text-purple-200 font-bold hover:text-purple-700">Reverie</a></li>
+                    </ul>
                 </div>
             </div>
         </>
