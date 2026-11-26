@@ -54,12 +54,14 @@ export default function Home() {
   };
 
   const handleKeyDown = async (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
       saveLink()
     }
   };
 
   async function saveLink() {
+    if (showSpinner) return
+
     const formattedUrl = formatUrl(url);
 
     if (!isValidHttpUrl(formattedUrl)) {
@@ -73,9 +75,15 @@ export default function Home() {
     }
 
     setShowSpinner(true)
-    allLinks = await fetchUrlMetadata(formattedUrl)
-    setShowSpinner(false)
-    reloadLinks(allLinks)
+    try {
+      const savedLinks = await fetchUrlMetadata(formattedUrl)
+      reloadLinks(savedLinks)
+    } catch (error) {
+      toast.error('Could not save the link. Check your browser storage.')
+    } finally {
+      setShowSpinner(false)
+      textInput.current?.focus()
+    }
   }
   
   function reloadLinks(links) {
@@ -122,7 +130,7 @@ export default function Home() {
 
   function checkLinkExists(url) {
     const links = JSON.parse(localStorage.getItem('links'))
-    const filteredLinks = links?.filter(link => link.url === url.href) ?? []
+    const filteredLinks = links?.filter(link => link.url === (url.href ?? String(url))) ?? []
     return filteredLinks.length > 0
   }
 
@@ -151,54 +159,69 @@ export default function Home() {
       return
     }
 
-    if (fileObj.type !== 'application/json') {
+    if (fileObj.type !== 'application/json' && !fileObj.name.toLowerCase().endsWith('.json')) {
       toast.error('Not a valid file.')
       event.target.value = null
       return
     }
 
     const fileReader = new FileReader();
-    fileReader.readAsText(event.target.files[0])
     fileReader.onload = (e) => {
       const contents = e.target.result
-      let importedLinks = JSON.parse(contents)
-
-      if (localStorage.getItem('links')) {
-        const existingLinks = JSON.parse(localStorage.getItem('links'))
-
-        if (existingLinks.length > 0) {
-          Dialog.fire({
-            text: 'Do you want to merge the imported links with your existing links?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#8e77e5',
-            confirmButtonText: 'Yes, merge it!',
-            cancelButtonText: 'No',
-            showClass: {
-              backdrop: 'swal2-noanimation', // disable backdrop animation
-              popup: '',                     // disable popup animation
-              icon: ''                       // disable icon animation
-            },
-            hideClass: {
-              popup: '',                     // disable popup fade-out animation
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              importedLinks.forEach(link => {
-                if (!checkLinkExists(link.url)) {
-                  existingLinks.push(link)
-                }
-              })
-      
-              importedLinks = existingLinks.reverse()
-            }
-            
-            localStorage.setItem('links', JSON.stringify(importedLinks))
-            setLinks(importedLinks)
-            toast.success('Bookmarks imported!')
-          })
+      let importedLinks
+      try {
+        importedLinks = JSON.parse(contents)
+        if (!Array.isArray(importedLinks) || importedLinks.some(link =>
+          !link || typeof link.id !== 'string' ||
+          typeof link.url !== 'string' || !isValidHttpUrl(link.url) ||
+          (link.title != null && typeof link.title !== 'string')
+        )) {
+          throw new Error('Invalid bookmarks')
         }
+      } catch (error) {
+        toast.error('Not a valid bookmarks file.')
+        return
+      }
+
+      const existingLinks = JSON.parse(localStorage.getItem('links') || '[]')
+      if (existingLinks.length > 0) {
+        Dialog.fire({
+          text: 'Do you want to merge the imported links with your existing links?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#8e77e5',
+          confirmButtonText: 'Yes, merge it!',
+          cancelButtonText: 'No',
+          showClass: {
+            backdrop: 'swal2-noanimation', // disable backdrop animation
+            popup: '',                     // disable popup animation
+            icon: ''                       // disable icon animation
+          },
+          hideClass: {
+            popup: '',                     // disable popup fade-out animation
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const urls = new Set(existingLinks.map(link => link.url))
+            const ids = new Set(existingLinks.map(link => link.id))
+            importedLinks.forEach(link => {
+              if (!urls.has(link.url)) {
+                let id = link.id
+                while (ids.has(id)) id = Math.random().toString(36).slice(2, 10)
+                existingLinks.push({ ...link, id })
+                urls.add(link.url)
+                ids.add(id)
+              }
+            })
+
+            importedLinks = existingLinks
+          }
+
+          localStorage.setItem('links', JSON.stringify(importedLinks))
+          setLinks(importedLinks)
+          toast.success('Bookmarks imported!')
+        })
       } else {
         localStorage.setItem('links', JSON.stringify(importedLinks))
         setLinks(importedLinks)
@@ -206,6 +229,8 @@ export default function Home() {
       }
     };
 
+    fileReader.onerror = () => toast.error('Could not read the bookmarks file.')
+    fileReader.readAsText(fileObj)
     event.target.value = null;
   }
 
@@ -222,8 +247,8 @@ export default function Home() {
 
       <AppHeader />
 
-      <div class="container mx-auto px-4 flex justify-center mt-10">
-        <div class="relative lg:w-1/2 w-full">
+      <div className="container mx-auto px-4 flex justify-center mt-10">
+        <div className="relative lg:w-1/2 w-full">
           <input
             type="text"
             className={`w-full border bg-gray-100 border-slate-300 dark:border-slate-600 outline-none focus:outline-none focus:ring lg:flex items-center text-sm sm:text-lg md:text-lg leading-6 text-slate-600 dark:text-slate-300 rounded-2xl shadow-sm py-4 px-4 pr-3 hover:ring-slate-300 dark:bg-slate-800 dark:highlight-white/5 dark:hover:bg-slate-700 ${hasValidUrl ? "focus:ring-green-300 ring-green-300" : ""}`}
@@ -237,36 +262,36 @@ export default function Home() {
             disabled={showSpinner}
           />
 
-          <div class="flex justify-center gap-5 mt-5">
-            <a href="javascript:void(0);" onClick={() => exportBookmarks()} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 dark:bg-purple-900 text-white hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
+          <div className="flex justify-center gap-5 mt-5">
+            <button type="button" onClick={() => exportBookmarks()} className="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 dark:bg-purple-900 text-white hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
               </svg>
               Export bookmarks
-            </a>
+            </button>
             <input
               style={{display: 'none'}}
               ref={importFile}
               type="file"
               onChange={handleImportFile}
             />
-            <a href="javascript:void(0);" onClick={importBookmarks} class="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 dark:bg-purple-900 text-white hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
+            <button type="button" onClick={importBookmarks} className="py-1 px-2 inline-flex justify-center items-center gap-1 rounded-md border border-transparent font-semibold bg-purple-500 dark:bg-purple-900 text-white hover:bg-purple-600 dark:hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
               </svg>
               Import bookmarks
-            </a>
+            </button>
           </div>
           
           <button type="button" className={`absolute right-3 top-4 sm:top-5 md:top-5 ${hasValidUrl && !showSpinner ? "show" : "hidden"}`} onClick={() => saveLink()}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-6 h-6 stroke-gray-500 hover:stroke-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 stroke-gray-500 hover:stroke-gray-700">
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </button>
 
           {showSpinner && (
-            <div class="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-violet-400 rounded-full absolute right-3 top-4 sm:top-5 md:top-5" role="status" aria-label="loading">
-              <span class="sr-only">Loading...</span>
+            <div className="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-violet-400 rounded-full absolute right-3 top-4 sm:top-5 md:top-5" role="status" aria-label="loading">
+              <span className="sr-only">Loading...</span>
             </div>
           )}
         </div>

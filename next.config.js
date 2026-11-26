@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    runtime: 'edge',
-  },
   publicRuntimeConfig: {
     app_name: 'LinkSnatch',
     app_short_description: 'Dead simple bookmarks',

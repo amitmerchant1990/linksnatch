@@ -25,43 +25,45 @@ export function isValidHttpUrl(string) {
 }
 
 export const fetchUrlMetadata = async (url) => {
-    let response;
+    const href = url.href ?? String(url)
+    const apiKey = process.env.NEXT_PUBLIC_JSONLINK_API_KEY
+    let data
 
-    let data;
+    if (apiKey) {
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 10000)
 
-    const jsonlink_api_key = process.env.NEXT_PUBLIC_JSONLINK_API_KEY
+        try {
+            const params = new URLSearchParams({ url: href, api_key: apiKey })
+            const response = await fetch(
+                publicRuntimeConfig.jsonlink_api_url + '/extract?' + params,
+                { signal: controller.signal }
+            )
 
-    try {
-        response = await fetch(
-            publicRuntimeConfig.jsonlink_api_url + `/extract?url=${url}&api_key=${jsonlink_api_key}`
-        )
-
-        if (!response.ok) {
-            toast.error('Oops! Bad URL.')
-            return false
+            if (!response.ok) throw new Error('Metadata request failed')
+            data = await response.json()
+        } catch (error) {
+            toast.error('Could not load the title. Saving the URL instead.')
+        } finally {
+            clearTimeout(timeout)
         }
-
-        data = await response.json();
-    } catch (error) {
-        console.log(error);
     }
 
     const linksArray = localStorage.getItem('links') ? JSON.parse(localStorage.getItem('links')) : []
-
     const linkMetaData = {
-        'id': Math.random().toString(36).substr(2, 8),
-        'title': data?.title ?? url,
-        'url': data?.url ?? url,
-        'timestamp': Math.floor(Date.now() / 1000),
+        id: Math.random().toString(36).slice(2, 10),
+        title: typeof data?.title === 'string' && data.title.trim() ? data.title : href,
+        url: href,
+        timestamp: Math.floor(Date.now() / 1000),
     }
 
-    linksArray.push(linkMetaData)
+    // The request can finish after another save or import added this URL.
+    if (!linksArray.some(link => link.url === href)) {
+        linksArray.push(linkMetaData)
+        localStorage.setItem('links', JSON.stringify(linksArray))
+    }
 
-    localStorage.setItem('links', JSON.stringify(linksArray))
-
-    const links = JSON.parse(localStorage.getItem('links'))
-
-    return links
+    return linksArray
 };
 
 export function copyLink(url) {
